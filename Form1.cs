@@ -26,17 +26,18 @@ public partial class Form1 : Form
         InitializeHotkeyControl();
         this.Size = new Size(400, 200); // Set a proper size for the form
         LoadHotkey();
-
-        // apiKeyTextBox = new TextBox()!;
-        // hotkeyTextBox = new TextBox()!;
-        // saveButton = new Button()!;
-        // apiKeyLabel = new Label()!;
-        // hotkeyLabel = new Label()!;
-        // tableLayoutPanel = new TableLayoutPanel()!;
-        // copyrightLabel = new Label()!;
     }
 
     private void InitializeFormControls()
+    {
+        InitializeTableLayoutPanel();
+        InitializeApiKeyControls();
+        InitializeHotkeyControls();
+        InitializeSaveButton();
+        InitializeCopyrightInformation();
+    }
+
+    private void InitializeTableLayoutPanel()
     {
         tableLayoutPanel = new TableLayoutPanel
         {
@@ -50,8 +51,10 @@ public partial class Form1 : Form
         tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
         tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
         this.Controls.Add(tableLayoutPanel);
+    }
 
-        // API Key controls
+    private void InitializeApiKeyControls()
+    {
         apiKeyLabel = new Label { Text = "API Key:" };
         tableLayoutPanel.Controls.Add(apiKeyLabel, 0, 0);
         apiKeyTextBox = new TextBox
@@ -59,17 +62,23 @@ public partial class Form1 : Form
             Width = 300
         };
         tableLayoutPanel.Controls.Add(apiKeyTextBox, 1, 0);
+    }
 
-        // Hotkey controls
+    private void InitializeHotkeyControls()
+    {
         hotkeyLabel = new Label { Text = "Hotkey:" };
         tableLayoutPanel.Controls.Add(hotkeyLabel, 0, 1);
+    }
 
-        // Save Button
+    private void InitializeSaveButton()
+    {
         saveButton = new Button { Text = "Save" };
         saveButton.Click += saveButton_Click;
         tableLayoutPanel.Controls.Add(saveButton, 1, 2);
+    }
 
-        // Copyright Information
+    private void InitializeCopyrightInformation()
+    {
         copyrightLabel = new Label
         {
             Text = "Whisperer by hudbrog\n" +
@@ -149,5 +158,4 @@ public partial class Form1 : Form
         currentHotkey = ConfigurationManager.ReadHotkey();
         hotkeyTextBox.Text = TypeDescriptor.GetConverter(typeof(Keys)).ConvertToString(currentHotkey);
     }
-
 }
