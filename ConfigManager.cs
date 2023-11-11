@@ -1,0 +1,77 @@
+using System;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
+using System.Windows.Forms;
+
+public class ConfigurationManager
+{
+    private const string ApiKeyFileName = "apikey.dat";
+    private const string HotkeyFileName = "hotkey.dat";
+
+    public static string ReadApiKey()
+    {
+        try
+        {
+            if (File.Exists(ApiKeyFileName))
+            {
+                byte[] encryptedApiKey = File.ReadAllBytes(ApiKeyFileName);
+                byte[] apiKeyBytes = ProtectedData.Unprotect(encryptedApiKey, null, DataProtectionScope.CurrentUser);
+                return Encoding.UTF8.GetString(apiKeyBytes);
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Error reading API key: {ex.Message}");
+        }
+
+        return string.Empty;
+    }
+
+    public static Keys ReadHotkey()
+    {
+        try
+        {
+            if (File.Exists(HotkeyFileName))
+            {
+                byte[] encryptedHotkey = File.ReadAllBytes(HotkeyFileName);
+                byte[] hotkeyBytes = ProtectedData.Unprotect(encryptedHotkey, null, DataProtectionScope.CurrentUser);
+                return (Keys)BitConverter.ToInt32(hotkeyBytes, 0);
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Error reading hotkey: {ex.Message}");
+        }
+
+        return Keys.None;
+    }
+
+    public static void SaveApiKey(string apiKey)
+    {
+        try
+        {
+            byte[] apiKeyBytes = Encoding.UTF8.GetBytes(apiKey);
+            byte[] encryptedApiKey = ProtectedData.Protect(apiKeyBytes, null, DataProtectionScope.CurrentUser);
+            File.WriteAllBytes(ApiKeyFileName, encryptedApiKey);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Error saving API key: {ex.Message}");
+        }
+    }
+
+    public static void SaveHotkey(Keys hotkey)
+    {
+        try
+        {
+            byte[] hotkeyBytes = BitConverter.GetBytes((int)hotkey);
+            byte[] encryptedHotkey = ProtectedData.Protect(hotkeyBytes, null, DataProtectionScope.CurrentUser);
+            File.WriteAllBytes(HotkeyFileName, encryptedHotkey);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Error saving hotkey: {ex.Message}");
+        }
+    }
+}
