@@ -10,8 +10,9 @@ public class ConfigurationManager
     public static event SettingsSavedEventHandler SettingsSaved;
 
 
-    private const string ApiKeyFileName = "apikey.dat";
-    private const string HotkeyFileName = "hotkey.dat";
+    private static readonly string AppDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+    private static readonly string ApiKeyFileName = Path.Combine(AppDataFolder, "apikey.dat");
+    private static readonly string HotkeyFileName = Path.Combine(AppDataFolder, "hotkey.dat");
 
     public static string ReadApiKey()
     {
