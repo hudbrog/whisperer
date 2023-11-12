@@ -6,6 +6,10 @@ using System.Windows.Forms;
 
 public class ConfigurationManager
 {
+    public delegate void SettingsSavedEventHandler(object sender, EventArgs e);
+    public static event SettingsSavedEventHandler SettingsSaved;
+
+
     private const string ApiKeyFileName = "apikey.dat";
     private const string HotkeyFileName = "hotkey.dat";
 
@@ -54,6 +58,7 @@ public class ConfigurationManager
             byte[] apiKeyBytes = Encoding.UTF8.GetBytes(apiKey);
             byte[] encryptedApiKey = ProtectedData.Protect(apiKeyBytes, null, DataProtectionScope.CurrentUser);
             File.WriteAllBytes(ApiKeyFileName, encryptedApiKey);
+            SettingsSaved?.Invoke(null, EventArgs.Empty);
         }
         catch (Exception ex)
         {
@@ -68,6 +73,7 @@ public class ConfigurationManager
             byte[] hotkeyBytes = BitConverter.GetBytes((int)hotkey);
             byte[] encryptedHotkey = ProtectedData.Protect(hotkeyBytes, null, DataProtectionScope.CurrentUser);
             File.WriteAllBytes(HotkeyFileName, encryptedHotkey);
+            SettingsSaved?.Invoke(null, EventArgs.Empty);
         }
         catch (Exception ex)
         {

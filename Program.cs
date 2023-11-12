@@ -29,6 +29,9 @@ public class TaskbarApp : Form
     [DllImport("user32.dll")]
     public static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
 
+    [DllImport("user32.dll")]
+    public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+
     public TaskbarApp()
     {
         SetupLogger();
@@ -36,6 +39,7 @@ public class TaskbarApp : Form
         RegisterHotKey();
 
         InitializeRecorder();
+        ConfigurationManager.SettingsSaved += (sender, e) => ReloadSettings();
         Logger.Info("init done");
     }
 
@@ -70,6 +74,18 @@ public class TaskbarApp : Form
         RegisterHotKey(this.Handle, 0, hotkeyModifier, hotkeyKey);
     }
 
+    public void UnregisterHotKey()
+    {
+        UnregisterHotKey(this.Handle, 0);
+    }
+
+    private void ReloadSettings()
+    {
+        Logger.Info("triggered config reload");
+        UnregisterHotKey();
+        RegisterHotKey();
+    }
+
 
     private void SetupLogger()
     {
@@ -84,7 +100,7 @@ public class TaskbarApp : Form
     {
         this.trayIcon = new NotifyIcon()
         {
-            Icon = SystemIcons.Application,
+            Icon = new Icon("whisperer.ico"),
             ContextMenuStrip = new ContextMenuStrip(),
             Visible = true
         };
