@@ -95,11 +95,26 @@ public class TaskbarApp : Form
         // Ensure the directory exists
         Directory.CreateDirectory(Path.GetDirectoryName(logFilePath));
 
-        NLog.LogManager.Setup().LoadConfiguration(builder =>
+        var config = new NLog.Config.LoggingConfiguration();
+
+        // Targets where to log to: File and Console
+        var logFile = new NLog.Targets.FileTarget("logfile")
         {
-            builder.ForLogger().FilterMinLevel(LogLevel.Info).WriteToConsole();
-            builder.ForLogger().FilterMinLevel(LogLevel.Debug).WriteToFile(logFilePath);
-        });
+            FileName = logFilePath,
+            ArchiveAboveSize = 1048576, // 1MB in bytes
+            ArchiveNumbering = NLog.Targets.ArchiveNumberingMode.Rolling,
+            MaxArchiveFiles = 5,
+            ConcurrentWrites = true,
+            KeepFileOpen = false,
+        };
+        var logConsole = new NLog.Targets.ConsoleTarget("logconsole");
+
+        // Rules for mapping loggers to targets            
+        config.AddRule(LogLevel.Info, LogLevel.Fatal, logConsole);
+        config.AddRule(LogLevel.Debug, LogLevel.Fatal, logFile);
+
+        // Apply config           
+        NLog.LogManager.Configuration = config;
     }
 
     private void InitializeUI()
