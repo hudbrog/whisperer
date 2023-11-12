@@ -89,10 +89,16 @@ public class TaskbarApp : Form
 
     private void SetupLogger()
     {
+        string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        string logFilePath = Path.Combine(appDataPath, "whisperer", "logs", "whisperer.log");
+
+        // Ensure the directory exists
+        Directory.CreateDirectory(Path.GetDirectoryName(logFilePath));
+
         NLog.LogManager.Setup().LoadConfiguration(builder =>
         {
             builder.ForLogger().FilterMinLevel(LogLevel.Info).WriteToConsole();
-            builder.ForLogger().FilterMinLevel(LogLevel.Debug).WriteToFile(fileName: "file.txt");
+            builder.ForLogger().FilterMinLevel(LogLevel.Debug).WriteToFile(logFilePath);
         });
     }
 
