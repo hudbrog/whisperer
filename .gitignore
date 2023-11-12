@@ -212,3 +212,4 @@ publish/
 
 
 *.dat
+.aider*
