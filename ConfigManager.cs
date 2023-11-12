@@ -35,6 +35,7 @@ public class ConfigurationManager
 
     public static Keys ReadHotkey()
     {
+        Keys defaultHotkey = Keys.Control | Keys.Shift | Keys.W;
         try
         {
             if (File.Exists(HotkeyFileName))
@@ -49,7 +50,7 @@ public class ConfigurationManager
             MessageBox.Show($"Error reading hotkey: {ex.Message}");
         }
 
-        return Keys.None;
+        return defaultHotkey;
     }
 
     public static void SaveApiKey(string apiKey)
