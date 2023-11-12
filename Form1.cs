@@ -83,7 +83,7 @@ public partial class Form1 : Form
         {
             Text = "Whisperer by hudbrog\n" +
                    "For more information visit [GitHub Placeholder]\n" +
-                   "© 2023 hudbrog",
+                   "© 2023 hudbrog\n\n",
             Dock = DockStyle.Bottom,
             TextAlign = ContentAlignment.MiddleCenter
         };
