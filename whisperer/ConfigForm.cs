@@ -4,9 +4,10 @@ using System.Security.Cryptography;
 using System.Text;
 using System.IO;
 using System.ComponentModel;
+using System.Configuration;
 
 namespace whisperer;
-public partial class Form1 : Form
+public partial class ConfigForm : Form
 {
     private TextBox apiKeyTextBox;
     private TextBox hotkeyTextBox;
@@ -18,7 +19,7 @@ public partial class Form1 : Form
     private Label copyrightLabel;
     private TableLayoutPanel tableLayoutPanel;
 
-    public Form1()
+    public ConfigForm()
     {
         InitializeComponent();
         InitializeFormControls();
@@ -83,7 +84,7 @@ public partial class Form1 : Form
         {
             Text = "Whisperer by hudbrog\n" +
                    "For more information visit [GitHub Placeholder]\n" +
-                   "Â© 2023 hudbrog\n\n",
+                   "© 2023 hudbrog\n\n",
             Dock = DockStyle.Bottom,
             TextAlign = ContentAlignment.MiddleCenter
         };

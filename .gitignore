@@ -213,3 +213,7 @@ publish/
 
 *.dat
 .aider*
+
+WAP/AppPackages
+WAP/BundleArtifacts
+WAP/WAP.assets.cache

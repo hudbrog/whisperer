@@ -7,13 +7,13 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="04fd48dd-e2b5-4f37-9fd0-009851fe5c3d"
+    Name="3210d504-efdd-4077-9077-d482a243a06d"
     Publisher="CN=hudbr"
-    Version="1.0.0.0" />
+    Version="1.0.6.0" />
 
   <Properties>
-    <DisplayName>Whisprer</DisplayName>
-    <PublisherDisplayName>hudbr</PublisherDisplayName>
+    <DisplayName>Whisperer</DisplayName>
+    <PublisherDisplayName>hudbrog</PublisherDisplayName>
     <Logo>Images\StoreLogo.png</Logo>
   </Properties>
 
@@ -36,7 +36,7 @@
         BackgroundColor="transparent"
         Square150x150Logo="Images\Square150x150Logo.png"
         Square44x44Logo="Images\Square44x44Logo.png">
-        <uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png"  Square71x71Logo="Images\SmallTile.png" Square310x310Logo="Images\LargeTile.png" ShortName="Whisperer"/>
+        <uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png"  Square71x71Logo="Images\SmallTile.png" Square310x310Logo="Images\LargeTile.png"/>
         <uap:SplashScreen Image="Images\SplashScreen.png" />
       </uap:VisualElements>
     </Application>
