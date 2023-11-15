@@ -84,7 +84,7 @@ public partial class ConfigForm : Form
         {
             Text = "Whisperer by hudbrog\n" +
                    "For more information visit [GitHub Placeholder]\n" +
-                   "© 2023 hudbrog\n\n",
+                   "ï¿½ 2023 hudbrog\n\n",
             Dock = DockStyle.Bottom,
             TextAlign = ContentAlignment.MiddleCenter
         };
