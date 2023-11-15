@@ -245,7 +245,8 @@ public class TaskbarApp : Form
     {
         using MemoryStream apiStream = new MemoryStream(audioData);
         OpenAIClient client = new OpenAIClient(ConfigurationManager.ReadApiKey());
-        var request = new AudioTranscriptionRequest(apiStream, null, language: "en");
+        string defaultLanguage = ConfigurationManager.ReadDefaultLanguage();
+        var request = new AudioTranscriptionRequest(apiStream, null, language: defaultLanguage);
         return await client.AudioEndpoint.CreateTranscriptionAsync(request);
     }
 

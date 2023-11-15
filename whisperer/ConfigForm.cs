@@ -18,6 +18,8 @@ public partial class ConfigForm : Form
     private Label hotkeyLabel;
     private Label copyrightLabel;
     private TableLayoutPanel tableLayoutPanel;
+    private TextBox defaultLanguageTextBox;
+    private Label defaultLanguageLabel;
 
     public ConfigForm()
     {
@@ -34,6 +36,7 @@ public partial class ConfigForm : Form
         InitializeTableLayoutPanel();
         InitializeApiKeyControls();
         InitializeHotkeyControls();
+        InitializeDefaultLanguageControls();
         InitializeSaveButton();
         InitializeCopyrightInformation();
     }
@@ -50,6 +53,7 @@ public partial class ConfigForm : Form
         tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80F));
         tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
         tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+        tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F)); // Add a new row for the default language
         tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
         this.Controls.Add(tableLayoutPanel);
     }
@@ -69,6 +73,22 @@ public partial class ConfigForm : Form
     {
         hotkeyLabel = new Label { Text = "Hotkey:" };
         tableLayoutPanel.Controls.Add(hotkeyLabel, 0, 1);
+    }
+
+    private void InitializeDefaultLanguageControls()
+    {
+        defaultLanguageLabel = new Label { Text = "Default Language:" };
+        tableLayoutPanel.Controls.Add(defaultLanguageLabel, 0, 2);
+        defaultLanguageTextBox = new TextBox
+        {
+            Width = 300
+        };
+        tableLayoutPanel.Controls.Add(defaultLanguageTextBox, 1, 2);
+    }
+
+    private void LoadDefaultLanguage()
+    {
+        defaultLanguageTextBox.Text = ConfigurationManager.ReadDefaultLanguage();
     }
 
     private void InitializeSaveButton()
@@ -100,7 +120,19 @@ public partial class ConfigForm : Form
     {
         ConfigurationManager.SaveApiKey(apiKeyTextBox.Text);
         ConfigurationManager.SaveHotkey(currentHotkey);
+        ConfigurationManager.SaveDefaultLanguage(defaultLanguageTextBox.Text);
         MessageBox.Show("Settings saved securely.");
+    }
+
+    private void LoadHotkey()
+    {
+        // Existing code...
+    }
+
+    protected override void OnLoad(EventArgs e)
+    {
+        base.OnLoad(e);
+        LoadDefaultLanguage(); // Load the default language setting when the form loads
     }
 
     private void InitializeHotkeyControl()

@@ -13,6 +13,7 @@ public class ConfigurationManager
     private static readonly string AppDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
     private static readonly string ApiKeyFileName = Path.Combine(AppDataFolder, "apikey.dat");
     private static readonly string HotkeyFileName = Path.Combine(AppDataFolder, "hotkey.dat");
+    private static readonly string DefaultLanguageFileName = Path.Combine(AppDataFolder, "defaultLanguage.dat");
 
     public static string ReadApiKey()
     {
@@ -65,6 +66,40 @@ public class ConfigurationManager
         catch (Exception ex)
         {
             MessageBox.Show($"Error saving API key: {ex.Message}");
+        }
+    }
+
+    public static string ReadDefaultLanguage()
+    {
+        try
+        {
+            if (File.Exists(DefaultLanguageFileName))
+            {
+                byte[] encryptedLanguage = File.ReadAllBytes(DefaultLanguageFileName);
+                byte[] languageBytes = ProtectedData.Unprotect(encryptedLanguage, null, DataProtectionScope.CurrentUser);
+                return Encoding.UTF8.GetString(languageBytes);
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Error reading default language: {ex.Message}");
+        }
+
+        return "en"; // Return "en" as the default language if not set
+    }
+
+    public static void SaveDefaultLanguage(string language)
+    {
+        try
+        {
+            byte[] languageBytes = Encoding.UTF8.GetBytes(language);
+            byte[] encryptedLanguage = ProtectedData.Protect(languageBytes, null, DataProtectionScope.CurrentUser);
+            File.WriteAllBytes(DefaultLanguageFileName, encryptedLanguage);
+            SettingsSaved?.Invoke(null, EventArgs.Empty);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Error saving default language: {ex.Message}");
         }
     }
 
