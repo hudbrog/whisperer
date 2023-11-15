@@ -83,8 +83,8 @@ public partial class ConfigForm : Form
         copyrightLabel = new Label
         {
             Text = "Whisperer by hudbrog\n" +
-                   "For more information visit [GitHub Placeholder]\n" +
-                   "� 2023 hudbrog\n\n",
+                   "For more information visit https://github.com/whisperer\n" +
+                   "(c) 2023 hudbrog\n\n",
             Dock = DockStyle.Bottom,
             TextAlign = ContentAlignment.MiddleCenter
         };
